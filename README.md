@@ -14,7 +14,7 @@ RCSB provides a public access API to their GraphQL (a graph oriented database). 
 # How to use?
 Just import the 3 classes (`Query`, `PDBCrawler` and `crawler_utils`), setup a `Query` object with a parameterized query (more on this later), feed this `Query` while creating a `PDBCrawler` and run `PDBCrawler.get_data` and **voi lá**! <br>
 
-## Code example
+# Code example
 ```python
 import Query, PDBCrawler, crawler_utils
 
@@ -28,7 +28,7 @@ crawler = PDBCrawler(base_query)
 
 data = crawler.get_data(ids_list=list_of_prots, chunksize=100) # get chunks of 100 responses at a time async
 ```
-## Future
+# Future
 0. Adopt `GitFlow` versioning;
 1. Create standard `Crawler` class, from which every api querying system will inherit
 2. Add `QueryResponse` class, to standarize query responses from `Crawler.get_data()`
