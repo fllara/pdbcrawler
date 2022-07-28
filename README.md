@@ -37,4 +37,5 @@ data = crawler.get_data(ids_list=list_of_prots, chunksize=100) # get chunks of 1
 5. Create `UNIPROTCrawler` class;
 6. Create `IDMapper` class, to map from `rcsb_id` to `uniprot_kb`.
 7. Create `Serializer` class, to orchestrate data serialization.
+8. Create `Crawler.post_process` method, to wrap all post proc operations into a async method.* 
 
