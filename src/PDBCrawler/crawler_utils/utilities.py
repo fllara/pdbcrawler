@@ -2,7 +2,7 @@ import typing as tp
 import pandas as pd
 import tqdm
 
-class crawler_utils(object):
+class CrawlerUtils(object):
   '''
   Placeholder for useful methods and constants.
   '''

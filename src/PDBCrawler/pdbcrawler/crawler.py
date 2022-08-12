@@ -1,5 +1,7 @@
-from crawler_utils.query import Query
-from crawler_utils.crawler_utils import *
+#from crawler_utils.query import Query
+#from crawler_utils.utilities import *
+from ..crawler_utils.query import Query
+from .. import crawler_utils
 
 import pandas as pd
 import urllib, re
@@ -7,6 +9,8 @@ import aiohttp
 import asyncio
 from copy import deepcopy
 import typing as tp
+import tqdm
+
 class PDBCrawler(object):
   def __init__(self, 
                query: Query,
