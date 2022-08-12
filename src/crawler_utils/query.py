@@ -10,7 +10,10 @@ class Query(object):
     if not self.query_params:
       print(f'!! WARNING !! No query parameters dict were supplied.')
     self.query = None # the latest state of query object
-  
+    # provisório
+    self.nodes = None # nodes são nós no gráfico: rcsb_entry_info, poly
+    
+
   def encode_query(self, inplace=False):
     if not self.query:
       raise AttributeError('self.query Not set. You must run setup_query first!')

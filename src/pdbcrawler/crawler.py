@@ -7,8 +7,6 @@ import aiohttp
 import asyncio
 from copy import deepcopy
 import typing as tp
-
-
 class PDBCrawler(object):
   def __init__(self, 
                query: Query,
@@ -31,10 +29,16 @@ class PDBCrawler(object):
 
   async def get_rcsb_query(self, session, query):
     async with session.get(query) as resp:
-        response = await resp.json()
+        if resp.status == 200:
+          response = await resp.json()
+        else: 
+          body = await resp.read()
+          response = f'Error, status: {resp.status} | msg: {body.decode()}'    
+          
         return response
 
   def set_base_query(self, base_query: tp.Union[str, Query]) -> None:
+    # this method is at stand by right now.
     if isinstance(base_query, Query):
       self.query = base_query
     else:
@@ -85,7 +89,8 @@ class PDBCrawler(object):
       tasks.append(task)
       #tasks.append(self.get_rcsb_query(self.session, url))
     
-    result = await asyncio.gather(*tasks)
+    #result = await asyncio.gather(*tasks)
+    result = [await f for f in tqdm.tqdm(asyncio.as_completed(tasks), total=len(tasks))]
     self.query_generator = None # restarts self.query_generator to initial state
     return result
 
@@ -100,9 +105,14 @@ class PDBCrawler(object):
   def get_data(self,
                ids_list: list,
                chunksize: int=1000,
-               prep_methods: list=None) -> list:    
+               parse_response: bool=True) -> list:    
     response = self._get_query_data(ids_list=ids_list, chunksize=chunksize)
     response = self.loop.run_until_complete(response)
+    asyncio.run(self.session.close())
+    if parse_response:
+      print(f'Parsing {len(response)} responses.')
+      response, errors = crawler_utils.parsePDBResponse(response)
+      if errors: print(f'{len(errors)} Error(s) was/were found!')
     return response
     
       
