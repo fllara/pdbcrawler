@@ -26,16 +26,6 @@ class CrawlerUtils(object):
       return False
 
   @staticmethod
-  def getFieldNodes(nodes: dict, query: set) -> list:
-    # gets the first value of matching key (is query in key)
-    try:
-      return next(node for fields, node in a.items() if query.issubset(fields))
-    except StopIteration:
-      return []
-    except Exception as e:
-      raise e
-
-  @staticmethod
   def parsePDBResponse(responses: list, return_errors: bool=True) -> tp.Union[pd.DataFrame, list]:
     def RecordParser(response: dict) -> pd.DataFrame:
       return pd.json_normalize(response, 
